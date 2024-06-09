@@ -19,29 +19,44 @@ def to_display_board(board, board_with_numbers):
     for b1, c1 in zip(display_board(board), cardinal_showing_board(board_with_numbers)):
         print(b1 + "    " + c1)
 
+
 def to_put_marker(board, position, marker):
     board[position] = marker
+
 
 def to_check_if_position_is_empty(board, position):
     return board[position] == " "
 
+
 def to_check_blank_space(board):
     return " " in board[1:10]
+
 
 def player_marker_choosing():
     while True:
         player_1_marker = input("Player 1, Pls choose your marker, either 'X' or 'O': ").upper()
+
+        if player_1_marker not in ("X", "O"):
+            print("Invalid choice. Please choose either 'X' or 'O'.")
+            continue
+
+
         if player_1_marker in ("X", "O"):
-            return ("X", "O") if player_1_marker == "X" else ("O", "X")
-        print("Invalid choice. Please choose either 'X' or 'O'.")
+            return ("X", "O")
+
+        else:
+            return ("O", "X")
+
 
 player_1_chosen_marker = " "
 player_2_chosen_marker = " "
+
 
 def player_chosen_marker():
     global player_1_chosen_marker, player_2_chosen_marker
     player_1_chosen_marker, player_2_chosen_marker = player_marker_choosing()
     return f"So,\nPlayer 1 marker: {player_1_chosen_marker}\nPlayer 2 marker: {player_2_chosen_marker}"
+
 
 def player_1_win_check(board):
     return any([
@@ -54,6 +69,7 @@ def player_1_win_check(board):
         board[1] == board[5] == board[9] == player_1_chosen_marker,
         board[3] == board[5] == board[7] == player_1_chosen_marker
     ])
+
 
 def player_2_win_check(board):
     return any([
@@ -68,6 +84,7 @@ def player_2_win_check(board):
     ])
 
 available_positions = list(range(1, 10))
+
 
 def player_1_code(board, board_with_numbers, available_positions):
     print("\n" * 1)
